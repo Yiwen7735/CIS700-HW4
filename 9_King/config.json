@@ -1,0 +1,4 @@
+{
+ "remappings": [ "@openzeppelin/contracts/=/workspaces/web3-security-class/hw4/node_modules/@openzeppelin/contracts/" ]
+}
+

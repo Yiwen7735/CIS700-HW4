@@ -1,0 +1,198 @@
+1. For each of the contracts, answer the following questions (no more than 2 sentences each).
+
+====================================== Level 1 ======================================
+    1. Did Mythril find the bug: Y
+        1. Did Mythril find any additional bugs? If Y..
+            1. Describe the bug and include the trace to hit it
+            2. Is the bug exploitable?
+
+            No additional bugs were found.
+
+    2. If Y, # of iterations / time taken? (If you didn’t time it just say an estimate.. Was it seconds, minutes, hours?).
+        It took about 10 - 20 seconds.
+
+    3. If Y, What manual effort was required?
+        1) I had to use another state variable `_owner` to store the initial owner address (add _owner = msg.sender) inside 
+        of the constructor on line 15; 
+        2) Add an asertion `assert(_owner == owner)` inside receive() on line 48. The bug is found if the assertion fails.
+
+    4. If Mythril didn’t find the bug, why not? Is this a limitation of symbolic execution, Mythril, or something else?
+    5. If Y, list the transactions needed to hit that bug.
+        Caller: [CREATOR], calldata: , decoded_data: , value: 0x0
+        Caller: [ATTACKER], function: contribute(), txdata: 0xd7bb99ba, value: 0x1
+        Caller: [ATTACKER], function: unknown, txdata: 0x, decoded_data: , value: 0x1
+        
+    6. If Y, Was this the same way you did manually in HW2?
+        Yes.
+
+====================================== Level 2 ======================================
+    1. Did Mythril find the bug: Y 
+        1. Did Mythril find any additional bugs? If Y..
+            1. Describe the bug and include the trace to hit it
+            2. Is the bug exploitable?
+
+            No additional bugs were found.
+
+    2. If Y, # of iterations / time taken? (If you didn’t time it just say an estimate.. Was it seconds, minutes, hours?).
+        1 - 2 minutes.
+
+    3. If Y, What manual effort was required?
+        1) Similar to level 1, I used another state variable `_owner` to store the initial owner address, and add a constructor: 
+        
+        constructor() public payable {
+            _owner = msg.sender;
+            owner = msg.sender;
+            allocations[owner] = msg.value;
+        }
+
+        2) Add an asertion `assert(_owner == owner)` on the last line inside `Fal1out()`. 
+           The bug would be considered detected if the assertion fails.
+
+    4. If Mythril didn’t find the bug, why not? Is this a limitation of symbolic execution, Mythril, or something else?
+    5. If Y, list the transactions needed to hit that bug.
+        Caller: [CREATOR], calldata: , decoded_data: , value: 0x0
+        Caller: [ATTACKER], function: Fal1out(), txdata: 0x6fab5ddf, value: 0x0
+
+    6. If Y, Was this the same way you did manually in HW2?
+        Yes.
+
+====================================== Level 4 ======================================
+    1. Did Mythril find the bug: Y
+        1. Did Mythril find any additional bugs? If Y..
+            1. Describe the bug and include the trace to hit it
+            2. Is the bug exploitable?
+        No additional bugs were found.
+
+    2. If Y, # of iterations / time taken? (If you didn’t time it just say an estimate.. Was it seconds, minutes, hours?).
+        It was very fast, within a couple of seconds.
+
+    3. If Y, What manual effort was required?
+        No manual effort was made.
+
+    4. If Mythril didn’t find the bug, why not? Is this a limitation of symbolic execution, Mythril, or something else?
+    5. If Y, list the transactions needed to hit that bug.
+        Caller: [CREATOR], calldata: , decoded_data: , value: 0x0
+        Caller: [ATTACKER], function: changeOwner(address), txdata: 0xa6f9dae10000000000000000000000000000000000000000000000000000000000000000, decoded_data: ('0x0000000000000000000000000000000000000000',), value: 0x0
+        
+    6. If Y, Was this the same way you did manually in HW2?
+        Yes.
+
+====================================== Level 5 ======================================
+    1. Did Mythril find the bug: Y
+        1. Did Mythril find any additional bugs? If Y..
+            1. Describe the bug and include the trace to hit it
+            2. Is the bug exploitable?
+        No additional bugs were found. Mythril marked line 14, 15, 16 as vulnerable since they are subject to the same 
+        kind of bug, which is the risk of overflow/underflow.
+
+    2. If Y, # of iterations / time taken? (If you didn’t time it just say an estimate.. Was it seconds, minutes, hours?).
+        It was very fast, within probably 5 seconds.
+
+    3. If Y, What manual effort was required?
+        No manual effort was made.
+
+    4. If Mythril didn’t find the bug, why not? Is this a limitation of symbolic execution, Mythril, or something else?
+    5. If Y, list the transactions needed to hit that bug.
+        Caller: [CREATOR], calldata: 0004000000000000000000000000000000000000000000000000000000000000a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0, decoded_data: , value: 0x0
+        Caller: [CREATOR], function: transfer(address,uint256), txdata: 0xa9059cbb000000000000000000000000affeaffeaffeaffeaffeaffeaffeaffeaffeaffec004000000000000000000000000000000000000000000000000000000000000, decoded_data: ('0xaffeaffeaffeaffeaffeaffeaffeaffeaffeaffe', 86851134316246260104996571946518902564015798434817925505425674430740017709056), value: 0x0
+    
+    6. If Y, Was this the same way you did manually in HW2?
+        Yes.
+
+====================================== Level 9 ======================================
+    1. Did Mythril find the bug: N
+        1. Did Mythril find any additional bugs? If Y..
+            1. Describe the bug and include the trace to hit it
+            2. Is the bug exploitable?
+
+    2. If Y, # of iterations / time taken? (If you didn’t time it just say an estimate.. Was it seconds, minutes, hours?).
+
+    3. If Y, What manual effort was required?
+
+    4. If Mythril didn’t find the bug, why not? Is this a limitation of symbolic execution, Mythril, or something else?
+    Symbolic execution can only perform analysis on the code given and is therefore unable to make inferences 
+    that are built on potential bugs presented in other code we are interacting with.
+
+    5. If Y, list the transactions needed to hit that bug.
+    6. If Y, Was this the same way you did manually in HW2?
+
+====================================== Level 10 ======================================
+    1. Did Mythril find the bug: Y
+        1. Did Mythril find any additional bugs? Y
+            1. Describe the bug and include the trace to hit it
+                Unchecked return value from external call. The contract did not make concrete plans (e.g., revert) for when the call fails.
+                Caller: [CREATOR], calldata: , decoded_data: , value: 0x0
+                Caller: [SOMEGUY], function: withdraw(uint256), txdata: 0x2e1a7d4d0000000000000000000000000000000000000000000000000000000000000000, decoded_data: (0,), value: 0x0
+                Caller: [ATTACKER], function: withdraw(uint256), txdata: 0x2e1a7d4d0000000000000000000000000000000000000000000000000000000000000000, decoded_data: (0,), value: 0x0
+
+                Unprotected Ether Withdrawal. Anyone, instead of owner only, can call the withdraw function in the contract.
+                Caller: [CREATOR], calldata: , decoded_data: , value: 0x0
+                Caller: [CREATOR], function: donate(address), txdata: 0x00362a95000000000000000000000000deadbeefdeadbeefdeadbeefdeadbeefdeadbeef, decoded_data: ('0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef',), value: 0x1
+                Caller: [ATTACKER], function: withdraw(uint256), txdata: 0x2e1a7d4d0000000000000000000000000000000000000000000000000000000000000001, decoded_data: (1,), value: 0x0
+
+            2. Is the bug exploitable?
+                Unchecked return value from external call can certainly be exploited. If the transaction fails 
+                but we don't do anything to react, we could end up with an incorrect value of state variable, e.g., 
+                already updated a sender's state variable without actually transfering fund successfully to him/her.
+
+                Unprotected Ether Withdrawal could be vulnerable to exploit in some context, since sometimes you may
+                want to only grant the contract owner that power; however it would not be an issue in this contract,
+                because the business logic here is to let donator take their own fund back, instead of the contract 
+                owner re-funding them in a centralized way.
+
+    2. If Y, # of iterations / time taken? (If you didn’t time it just say an estimate.. Was it seconds, minutes, hours?).
+        Approximately 1 minute.
+
+    3. If Y, What manual effort was required?
+        No manual effort was made.
+
+    4. If Mythril didn’t find the bug, why not? Is this a limitation of symbolic execution, Mythril, or something else?
+    5. If Y, list the transactions needed to hit that bug.
+        Caller: [CREATOR], calldata: , decoded_data: , value: 0x0
+        Caller: [ATTACKER], function: withdraw(uint256), txdata: 0x2e1a7d4d0000000000000000000000000000000000000000000000000000000000000000, decoded_data: (0,), value: 0x0
+
+    6. If Y, Was this the same way you did manually in HW2?
+        Yes.
+
+====================================== ROIToken ======================================
+
+    1. Did Mythril find the bug: Y
+        1. Did Mythril find any additional bugs? Y 
+            1. Describe the bug and include the trace to hit it
+                Dependence on predictable environment variable. Basically the contract uses block.timestamp 
+                in their business logic to determine whether the contract can be unlocked.
+                Caller: [CREATOR], calldata: , decoded_data: , value: 0x0
+                Caller: [CREATOR], function: lock(uint256), txdata: 0xdd467064812c01a2d2a29124041220cae440ab80a4502f51004020d7480000c4e6210050, decoded_data: (58426110029531777296688330045406385854560702423592847608075778920039667794000,), value: 0x0
+                Caller: [CREATOR], function: unlock(), txdata: 0xa69df4b5, value: 0x0
+
+            2. Is the bug exploitable?
+                Yes. Hashers of earlier blocks are known and miners can leverage that to exploit a time lag.
+
+    2. If Y, # of iterations / time taken? (If you didn’t time it just say an estimate.. Was it seconds, minutes, hours?).
+        It took about 10-20 seconds.
+
+    3. If Y, What manual effort was required?
+        I had to add `assert (_owner == msg.sender)` on line 186 inside `transferOwnership()` to check 
+        only the current owner can access this function, which I believe should be the intended behavior.
+
+    4. If Mythril didn’t find the bug, why not? Is this a limitation of symbolic execution, Mythril, or something else?
+    5. If Y, list the transactions needed to hit that bug.
+        Caller: [CREATOR], calldata: , decoded_data: , value: 0x0
+        Caller: [SOMEGUY], function: transferOwnership(address), txdata: 0xf2fde38b0000000000000000000000000000000000000000000000000000000000000000, decoded_data: ('0x0000000000000000000000000000000000000000',), value: 0x0
+        
+    6. If Y, Was this the same way you did manually in HW2?
+        For ROIToken: Is this the same way the attacker exploited the vulnerability?
+        Yes.
+
+2. Answer the following questions: (Only 2-3 sentences each)
+    1. List some appealing properties of symbolic execution?
+        Symbolic execution takes the code structure into account when generating inputs, enabling it to explore all 
+        (or as many as possible) execution paths, which means it is able to achieve a better test coverage than fuzzing.
+
+    2. What are the limitations of symbolic execution?
+
+    3. What are used as bug oracles?
+
+    4. If you didn’t know that the bugs existed and what they were, would your process to find them have been different? How?
+    
+    5. Can you think of any additional challenges for symbolic execution in the smart contract domain? (compared to java or C)

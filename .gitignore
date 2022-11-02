@@ -1,0 +1,4 @@
+.devcontainer/zsh_history
+.vscode
+*/crytic-export/
+node_modules/
